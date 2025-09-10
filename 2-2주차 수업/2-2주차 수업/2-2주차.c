@@ -33,7 +33,7 @@ int main() {
 
 		gotoXY(x, y);
 		printf("*");
-		Sleep(100);
+		//Sleep(100);
 
 		if (x == 0 && y == 1) {
 			break;

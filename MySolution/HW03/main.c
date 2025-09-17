@@ -1,15 +1,15 @@
-ï»¿#include <stdio.h>
+#include <stdio.h>
 #include <math.h>
 #include <Windows.h>
 
 #define PI 3.14159265358979323846
 
-// ì»¤ì„œ ì´ë™ í•¨ìˆ˜
+// Ä¿¼­ ÀÌµ¿ ÇÔ¼ö
 void moveCursor(int x, int y) {
     printf("\x1b[%d;%dH", y, x);
 }
 
-// í­íƒ„ ì¶œë ¥ í•¨ìˆ˜
+// ÆøÅº Ãâ·Â ÇÔ¼ö
 void printBomb(int isExploded) {
     if (isExploded) {
         printf("\x1b[A^^^^^^^");
@@ -22,19 +22,19 @@ void printBomb(int isExploded) {
 }
 
 int main() {
-    printf("\x1b[2J"); // í™”ë©´ ì§€ìš°ê¸°
+    printf("\x1b[2J"); // È­¸é Áö¿ì±â
 
-    int cx = 14, cy = 9; // ë¶ˆê½ƒ ì‹œì‘ ìœ„ì¹˜
+    int cx = 14, cy = 9; // ºÒ²É ½ÃÀÛ À§Ä¡
     int x = cx, y = cy;
-    int angle = 270; // ì‹œì‘ ë°©í–¥: ì•„ë˜
-    int step = 2;    
+    int angle = 270; // ½ÃÀÛ ¹æÇâ: ¾Æ·¡
+    int step = 2;
 
-    // í­íƒ„ ìœ„ì¹˜
+    // ÆøÅº À§Ä¡
     int bombX = 0, bombY = 3;
     moveCursor(bombX, bombY);
     printBomb(0);
 
-    // === 1ë‹¨ê³„: ì‹¬ì§€ ì „ì²´ ê·¸ë¦¬ê¸° ===
+    // === 1´Ü°è: ½ÉÁö ÀüÃ¼ ±×¸®±â ===
     int tx = x, ty = y;
     int tempAngle = angle;
     int tempStep = step;

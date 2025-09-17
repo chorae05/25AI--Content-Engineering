@@ -21,7 +21,6 @@ int main(void) {
 }
 */
 int main(void) {
-	for (int i = 0;i < 5;i++) puts(i == 0 || i == 4 ? "*****" : "*   *");
+	for (int i = 0; i < 5; i++) puts(i == 0 || i == 4 ? "*****" : "*   *");
 	return 0;
 }
-

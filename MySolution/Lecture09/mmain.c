@@ -9,6 +9,8 @@
       - MSVC(Windows): cl /W4 /Za string_lab.c
       - GCC/Clang    : gcc -Wall -Wextra -std=c11 string_lab.c -o string_lab
 
+
+
     이 파일에서 다루는 핵심 함수들(<string.h>):
       길이/복사/붙이기: strlen, strcpy, strncpy, strcat, strncat
       비교           : strcmp, strncmp

@@ -21,7 +21,7 @@ int save_players(const char* filename)
     int count = 0;
 
     printf("몇 명의 선수 정보를 저장할까요? ");
-    scanf_s("%d", &count);
+    scanf_s("%d", &count); 
 
     // 잘못된 숫자 입력 시
     if (count <= 0 || count > MAX) {

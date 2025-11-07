@@ -46,7 +46,7 @@ int main(void)
             max_idx = i;
 
     // ⚙️ 김철수(2번째, index=1) vs 오상우(7번째, index=6)
-    int i3 = 2, i8 = 7;
+    int i3 = 3, i8 = 8;
 
     int damage3 = stu[i8].atk - stu[i3].def;
     int damage8 = stu[i3].atk - stu[i8].def;

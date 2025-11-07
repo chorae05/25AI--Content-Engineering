@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 
+
 // 선수 한 명의 정보를 저장할 구조체
 typedef struct {
     char name[64];   // 이름

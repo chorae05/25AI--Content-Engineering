@@ -89,7 +89,7 @@ int main(void) // 프로그램이 시작되는 부분
     if (damage3 < 0) damage3 = 0; // 마이너스 데미지는 0으로 처리
     if (damage8 < 0) damage8 = 0;
 
-    // ⚔️ 싸움 결과 계산하기
+    // 싸움 결과 계산하기
     int hp3 = stu[i3].hp - damage3;
     int hp8 = stu[i8].hp - damage8;
 
@@ -132,4 +132,5 @@ int main(void) // 프로그램이 시작되는 부분
     printf("결과가 Test.txt로 저장되었습니다!\n");
 
     return 0; // 프로그램 정상 종료
+
 }

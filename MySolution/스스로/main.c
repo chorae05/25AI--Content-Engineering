@@ -68,23 +68,6 @@ int main(void) {
         if (s[i].atk > s[fightmax].atk)
             fightmax = i;
 
-    int i3 = 3, i8 = 8;
-
-    
-    /*(5) 다섯 번째 줄
-
-3번째 사람과 8번째 사람이 싸운다고 가정하고, 승자 이름 또는 무승부를 출력한다.
-(세 가지 중 하나)
-ex>
-
-3번째 vs 8번째 승자: 3번째사람이름
-3번째 vs 8번째 승자: 8번째사람이름
-3번째 vs 8번째: 무승부
-
-*/
-
-
-
     FILE* T = NULL;
     fopen_s(&T, "Test.txt", "w");
 
@@ -93,12 +76,22 @@ ex>
         return -1;
     }
 
-    fprintf(T, "학번 : %s  이름 : %s\n", hakbun, name);
+    fprintf(T, "%s : %s\n", hakbun, name);
     fprintf(T, "가장 공격력이 높은 사람: %s (ATK=%d)\n", s[fightmax].name, s[fightmax].atk);
-    fprintf(T, "3번째 : %s Hp=%d\n", s[i3].name, s[i3].hp);
-    fprintf(T, "8번째 : %s Hp=%d\n", s[i8].name, s[i8].hp);
+    fprintf(T, "3번째: %s HP=%d\n", s[3].name, s[3].hp);
+    fprintf(T, "8번째: %s HP=%d\n", s[8].name, s[8].hp);
 
+    //fprintf(T, "3번째 vs 8번째 승자: %s\n", s[i3].atk > s[i8].atk ? s[i3].atk: s[i3].atk < s[i8].atk ? s[i8].atk:"무승부");
 
+    if (s[3].atk < s[8].atk) {
+        fprintf(T, "3번째 vs 8번째 승자 : &s\n", s[3].name);
+    }
+    else if (s[3].atk < s[8].atk) {
+        fprintf(T, "3번째 vs 8번째 승자 : &s\n", s[8].name);
+    }
+    else fprintf(T, "3번째 vs 8번째 승자 : 무승부\n" );
+
+    fprintf(T, "교수님 시험문제 너무 쉽습니다. 담주에 더 어렵게 내주세요\n");
     fclose(T);
     printf("Test.txt 파일이 정상적으로 생성되었습니다!\n");
 

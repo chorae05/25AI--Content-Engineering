@@ -1,100 +1,136 @@
-#include <stdio.h>   
-#include <stdlib.h>  
-#include <string.h> 
-#include <conio.h>   
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <windows.h>
+#include <conio.h>
+
+#define MAX 100  
 
 typedef struct {
-    char name[20];
-    int atk;
-    int def;
-    int hp;
-    char winner[250];
-} Student;
+    char name[20]; 
+    int age;
+    int number;
+    double tiyou;
+    
+} Player;
 
-// 싸움에서 이긴 사람의 이름을 저장
-#define MAX 100
+void setTextColor(int color) {
+    printf("\033[%dm", color);  // 31=빨강, 32=초록, 33=노랑, 36=하늘색, 37=흰색 등
+}
 
-int main(void) {
-    Student s[10];
-    char name[20];
-    char hakbun[20];
+void resetTextColor() {
+    printf("\033[0m");  // 색상 초기화 (기본색으로 복귀)
+}
+
+
+int main() {
+    char line[256];  // 파일에서 한 줄씩 읽을 공간
     int count = 0;
-    char line[265];
-    char winner[64];
+    Player player[MAX];
 
-    printf("학번: ");
-    scanf_s("%s", hakbun, (rsize_t)sizeof(hakbun));
+  
 
-    printf("이름: ");
-    scanf_s("%s", name, (rsize_t)sizeof(name));
+    setTextColor(32);
+    printf("몇 명의 선수를 입력받을까요? :");
+    setTextColor(0);
+    scanf_s("%d", &count);
+    
+
+    if (count < 1 || count > MAX) {
+        printf("잘못입력했습니다");
+        return 1;
+    }
+
+    for (int i = 0; i < count; i++) {
+        printf("%d 번쨰 선수다\n", i + 1);
+
+        printf("이름: ");
+        scanf_s("%s", player[i].name, (rsize_t)sizeof(player[i].name));
+
+        printf("나이: ");
+        scanf_s("%d", &player[i].age);
+
+        printf("등번호: ");
+        scanf_s("%d", &player[i].number);
+
+        printf("타율: ");
+        scanf_s("%lf", &player[i].tiyou);
+    }
 
     FILE* file = NULL;
-    fopen_s(&file, "students.csv", "r");
-
-    if (!file) {
+    errno_t err = fopen_s(&file, "players_lg.csv", "w");
+    if (err != 0 || file == NULL) {
         printf("파일을 열 수 없습니다!\n");
         return -1;
     }
 
+    fprintf(file, "이름,나이,등번호,타율\n");
 
-    // 한 줄씩 읽기
-    while (fgets(line, sizeof(line), file) && count < 10) {
-
-        line[strcspn(line, "\n")] = 0;
-
-        char* token;
-        char* next;
-
-        token = strtok_s(line, ",", &next);
-        strcpy_s(s[count].name, sizeof(s[count].name), token);
-
-        token = strtok_s(NULL, ",", &next);
-        s[count].atk = atoi(token);
-
-        token = strtok_s(NULL, ",", &next);
-        s[count].def = atoi(token);
-
-        token = strtok_s(NULL, ",", &next);
-        s[count].hp = atoi(token);
-
-        count++;
+    for (int i = 0; i < count; i++)
+    {
+        fprintf(file, "%s,%d,%d,%.3lf\n",
+            player[i].name,
+            player[i].age,
+            player[i].number,
+            player[i].tiyou);
     }
 
     fclose(file);
+    printf("\n 파일 저장 완료! (%s)\n", "players_lg.csv");
+    printf("%d 명의 정보를 CSV에 저장했습니다. -> %s\n", count, "players_lg.csv");
+    printf("엔터를 누르면 csv를 다시 읽어옵니다.\n");
+    _getch();
 
-    int fightmax = 0;
-    int i = 1;
-    for (i; i < count; i++)
-        if (s[i].atk > s[fightmax].atk)
-            fightmax = i;
 
-    FILE* T = NULL;
-    fopen_s(&T, "Test.txt", "w");
+    FILE* fp = NULL;
+    fopen_s(&fp, "players_lg.csv", "r");
 
-    if (!T) {
-        printf("Test. txt 파일을 열 수 없습니다!\n");
-        return -1;
+    if (!fp) {
+        printf("players_lg.csv 파일을 열 수 없습니다.\n");
+        return 1; // 프로그램을 종료합니다.
     }
 
-    fprintf(T, "%s : %s\n", hakbun, name);
-    fprintf(T, "가장 공격력이 높은 사람: %s (ATK=%d)\n", s[fightmax].name, s[fightmax].atk);
-    fprintf(T, "3번째: %s HP=%d\n", s[3].name, s[3].hp);
-    fprintf(T, "8번째: %s HP=%d\n", s[8].name, s[8].hp);
+    int loadcount = 0;
+    fgets(line, sizeof(line), fp);
 
-    //fprintf(T, "3번째 vs 8번째 승자: %s\n", s[i3].atk > s[i8].atk ? s[i3].atk: s[i3].atk < s[i8].atk ? s[i8].atk:"무승부");
+    while (fgets(line, sizeof(line), fp)) {
 
-    if (s[3].atk < s[8].atk) {
-        fprintf(T, "3번째 vs 8번째 승자 : &s\n", s[3].name);
+        char* t, * n;
+
+
+        t = strtok_s(line, ",", &n);
+        strcpy_s(player[loadcount].name, sizeof(player[loadcount].name), t);
+
+
+        t = strtok_s(NULL, ",", &n);
+        player[loadcount].age = atoi(t);
+
+
+        t = strtok_s(NULL, ",", &n);
+        player[loadcount].number = atoi(t);
+
+
+        t = strtok_s(NULL, ",", &n);
+        player[loadcount].tiyou = atof(t);
+
+        loadcount++;
+
+        fclose(fp);
+
+        printf("csv에서 %d명 로드됨 -> 표로 출력합니다.\n", loadcount);
+        printf("---------------------------------------------------------\n");
+        printf("name, age, number, tiyou\n");
+        printf("---------------------------------------------------------\n");
+
+
+        for (int i = 0; i < loadcount; i++) {
+            Sleep(500);
+            printf("%s, %d, %d, %.3lf\n", player[i].name, player[i].age, player[i].number, player[i].tiyou);
+        }
+        printf("출력을 모두 완료했습니다.\n 아무키나 누르면 종료됩니다\n");
+
+
+        return 0;
+
     }
-    else if (s[3].atk < s[8].atk) {
-        fprintf(T, "3번째 vs 8번째 승자 : &s\n", s[8].name);
-    }
-    else fprintf(T, "3번째 vs 8번째 승자 : 무승부\n" );
-
-    fprintf(T, "교수님 시험문제 너무 쉽습니다. 담주에 더 어렵게 내주세요\n");
-    fclose(T);
-    printf("Test.txt 파일이 정상적으로 생성되었습니다!\n");
-
-    return 0;
-
 }

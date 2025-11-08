@@ -27,6 +27,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "파일만드는법", "파�
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "스스로", "스스로\스스로.vcxproj", "{6CAAED26-6FF7-4E12-83EC-ABB1AFC2A1B7}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "야구선수", "야구선수\야구선수.vcxproj", "{F5CAB552-2876-4B9E-8C45-A3295F157540}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -131,6 +133,14 @@ Global
 		{6CAAED26-6FF7-4E12-83EC-ABB1AFC2A1B7}.Release|x64.Build.0 = Release|x64
 		{6CAAED26-6FF7-4E12-83EC-ABB1AFC2A1B7}.Release|x86.ActiveCfg = Release|Win32
 		{6CAAED26-6FF7-4E12-83EC-ABB1AFC2A1B7}.Release|x86.Build.0 = Release|Win32
+		{F5CAB552-2876-4B9E-8C45-A3295F157540}.Debug|x64.ActiveCfg = Debug|x64
+		{F5CAB552-2876-4B9E-8C45-A3295F157540}.Debug|x64.Build.0 = Debug|x64
+		{F5CAB552-2876-4B9E-8C45-A3295F157540}.Debug|x86.ActiveCfg = Debug|Win32
+		{F5CAB552-2876-4B9E-8C45-A3295F157540}.Debug|x86.Build.0 = Debug|Win32
+		{F5CAB552-2876-4B9E-8C45-A3295F157540}.Release|x64.ActiveCfg = Release|x64
+		{F5CAB552-2876-4B9E-8C45-A3295F157540}.Release|x64.Build.0 = Release|x64
+		{F5CAB552-2876-4B9E-8C45-A3295F157540}.Release|x86.ActiveCfg = Release|Win32
+		{F5CAB552-2876-4B9E-8C45-A3295F157540}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

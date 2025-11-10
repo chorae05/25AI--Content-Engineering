@@ -34,6 +34,8 @@ int main(void) {
         return -1;
     }
 
+    fgets(line, sizeof(line), file);
+
     // 한 줄씩 읽기
     while (fgets(line, sizeof(line), file) && count < 10) {
 

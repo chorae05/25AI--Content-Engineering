@@ -12,6 +12,7 @@ typedef struct {
 } Student;
 
 
+
 int main(void) {
     Student s[10];
     char name[20];

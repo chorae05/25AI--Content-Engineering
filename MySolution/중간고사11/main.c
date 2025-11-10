@@ -1,4 +1,4 @@
-ï»¿#include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <conio.h>
@@ -19,25 +19,25 @@ int main() {
     char hakbun[20];
     char user_name[20];
 
-    // í•™ë²ˆê³¼ ì´ë¦„ ì…ë ¥
-    printf("í•™ë²ˆ= ");
+    // ÇĞ¹ø°ú ÀÌ¸§ ÀÔ·Â
+    printf("ÇĞ¹ø= ");
     scanf_s("%s", hakbun, (rsize_t)sizeof(hakbun));
-    printf("ì´ë¦„= ");
+    printf("ÀÌ¸§= ");
     scanf_s("%s", user_name, (rsize_t)sizeof(user_name));
 
 
-    // (2) CSV íŒŒì¼ ì—´ê¸°
+    // (2) CSV ÆÄÀÏ ¿­±â
     FILE* fp1 = NULL;
     err = fopen_s(&fp1, "students.csv", "r");
     if (err != 0 || fp1 == NULL) {
-        printf("students.csv íŒŒì¼ ì—´ê¸° ì‹¤íŒ¨(ì“°ê¸°): %s (errno=%d)\n", "students.csv", err);
+        printf("students.csv ÆÄÀÏ ¿­±â ½ÇÆĞ(¾²±â): %s (errno=%d)\n", "students.csv", err);
         return -1;
     }
-    printf("íŒŒì¼ ì—´ê¸° ì„±ê³µ!!");
+    printf("ÆÄÀÏ ¿­±â ¼º°ø!!");
 
     fgets(line, sizeof(line), fp1);
 
-    //  í•œ ì¤„ì”© ì½ì–´ì„œ êµ¬ì¡°ì²´ ë°°ì—´ì— ì €ì¥
+    //  ÇÑ ÁÙ¾¿ ÀĞ¾î¼­ ±¸Á¶Ã¼ ¹è¿­¿¡ ÀúÀå
     while (fgets(line, sizeof(line), fp1) && count < 100) {
         char* next;
         char* token = strtok_s(line, ",", &next);
@@ -51,53 +51,35 @@ int main() {
         stu[count].def = atoi(token);
 
         token = strtok_s(NULL, ",", &next);
-       stu[count].hp = atoi(token);
+        stu[count].hp = atoi(token);
 
-  
+        token = strtok_s(NULL, ",", &next);
+        stu[count].mp = atoi(token);
 
         count++;
     }
     fclose(fp1);
 
-    //  Test.txt íŒŒì¼ ìƒì„±     
+    //  Test.txt ÆÄÀÏ »ı¼º     
     // 
     FILE* fp2 = NULL;
     err = fopen_s(&fp2, "Test.txt", "w");
     if (err != 0 || fp2 == NULL) {
-        printf(" test. txt íŒŒì¼ ì—´ê¸° ì‹¤íŒ¨(ì“°ê¸°): %s (errno=%d)\n", "Test.txt", err);
-        return -1;
+        printf(" test. txt ÆÄÀÏ ¿­±â ½ÇÆĞ(¾²±â): %s (errno=%d)\n", "Test.txt", err);
+        return 1;
     }
-    printf("í…ŒìŠ¤íŠ¸ íŒŒì¼ ì—´ê¸° ì„±ê³µ");
+    printf("Å×½ºÆ® ÆÄÀÏ ¿­±â ¼º°ø");
 
 
     fprintf(fp2, "%s : %s\n", hakbun, user_name);
-    fprintf(fp2, "%s,%s\n", stu[7].name, stu[8].name);
 
-
+    //  7¹øÂ°, 8¹øÂ° ÀÌ¸§
     if (count >= 8)
         fprintf(fp2, "%s %s\n", stu[6].name, stu[7].name);
     else
-        fprintf(fp2, "ë°ì´í„°ê°€ ë¶€ì¡±í•©ë‹ˆë‹¤.\n");
+        fprintf(fp2, "µ¥ÀÌÅÍ°¡ ºÎÁ·ÇÕ´Ï´Ù.\n");
 
-
-    /*int damage3 = stu[i8].atk - stu[i3].def; // 8ë²ˆì§¸ê°€ 3ë²ˆì§¸ì—ê²Œ ì£¼ëŠ” ë°ë¯¸ì§€
-    int damage8 = stu[i3].atk - stu[i8].def; // 3ë²ˆì§¸ê°€ 8ë²ˆì§¸ì—ê²Œ ì£¼ëŠ” ë°ë¯¸ì§€
-    if (damage3 < 0) damage3 = 0; // ë§ˆì´ë„ˆìŠ¤ ë°ë¯¸ì§€ëŠ” 0ìœ¼ë¡œ ì²˜ë¦¬
-    if (damage8 < 0) damage8 = 0;
-
-    // ì‹¸ì›€ ê²°ê³¼ ê³„ì‚°í•˜ê¸°
-    int hp3 = stu[i3].hp - damage3;
-    int hp8 = stu[i8].hp - damage8;
-
-    if (damage3 == 0 && damage8 == 0)
-        strcpy_s(winner, sizeof(winner), "ë¬´ìŠ¹ë¶€");    //winnerì— ì•ˆì „í•˜ê²Œ ë³µì‚¬ë¥¼ ë„£ê¸° ìœ„í•´  strcpy_së¥¼ ì‚¬ìš©í•¨
-    else if (hp3 == hp8)
-        strcpy_s(winner, sizeof(winner), "ë¬´ìŠ¹ë¶€");
-    else if (hp3 > hp8)
-        strcpy_s(winner, sizeof(winner), stu[i3].name);
-    else
-        strcpy_s(winner, sizeof(winner), stu[i8].name);*/
-
+    //  Mother vs Horo (Ã£¾Æ¼­ ½Î¿ò)
     int idxMother = -1, idxHoro = -1;
     for (int i = 0; i < count; i++) {
         if (strcmp(stu[i].name, "Mother") == 0)
@@ -115,7 +97,7 @@ int main() {
         while (m_hp > 0 && h_hp > 0) {
             int dmg_m = 0, dmg_h = 0;
 
-
+            // MotherÀÇ °ø°İ
             if (m_mp >= stu[idxMother].atk) {
                 m_mp -= stu[idxMother].atk;
                 dmg_m = stu[idxMother].atk - stu[idxHoro].def;
@@ -127,7 +109,7 @@ int main() {
                 if (dmg_m < 0) dmg_m = 0;
             }
 
-
+            // HoroÀÇ °ø°İ
             if (h_mp >= stu[idxHoro].atk) {
                 h_mp -= stu[idxHoro].atk;
                 dmg_h = stu[idxHoro].atk - stu[idxMother].def;
@@ -139,37 +121,37 @@ int main() {
                 if (dmg_h < 0) dmg_h = 0;
             }
 
-            // í”¼í•´ ì ìš©
+            // ÇÇÇØ Àû¿ë
             m_hp -= dmg_h;
             h_hp -= dmg_m;
 
-            // ì–‘ìª½ í”¼í•´ 0ì´ë©´ ì¦‰ì‹œ ë¬´ìŠ¹ë¶€
+            // ¾çÂÊ ÇÇÇØ 0ÀÌ¸é Áï½Ã ¹«½ÂºÎ
             if (dmg_h == 0 && dmg_m == 0) {
-                fprintf(fp2, "ë¬´ìŠ¹ë¶€\n");
+                fprintf(fp2, "¹«½ÂºÎ\n");
                 goto skipBattle;
             }
 
-            // ë‘˜ ë‹¤ 0 ì´í•˜ì¸ ê²½ìš° ë¬´ìŠ¹ë¶€
+            // µÑ ´Ù 0 ÀÌÇÏÀÎ °æ¿ì ¹«½ÂºÎ
             if (m_hp <= 0 && h_hp <= 0) {
-                fprintf(fp2, "ë¬´ìŠ¹ë¶€\n");
+                fprintf(fp2, "¹«½ÂºÎ\n");
                 goto skipBattle;
             }
         }
 
         if (m_hp > 0 && h_hp <= 0)
-            fprintf(fp2, "%s ìŠ¹! , %s íŒ¨\n", stu[idxMother].name, stu[idxHoro].name);
+            fprintf(fp2, "%s ½Â! , %s ÆĞ\n", stu[idxMother].name, stu[idxHoro].name);
         else if (h_hp > 0 && m_hp <= 0)
-            fprintf(fp2, "%s ìŠ¹! , %s íŒ¨\n", stu[idxHoro].name, stu[idxMother].name);
+            fprintf(fp2, "%s ½Â! , %s ÆĞ\n", stu[idxHoro].name, stu[idxMother].name);
         else
-            fprintf(fp2, "ë¬´ìŠ¹ë¶€\n");
+            fprintf(fp2, "¹«½ÂºÎ\n");
     }
     else {
-        fprintf(fp2, "Mother ë˜ëŠ” Horoë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.\n");
+        fprintf(fp2, "Mother ¶Ç´Â Horo¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.\n");
     }
 
 skipBattle:
 
-    // Motherì™€ ì‹¸ì›Œì„œ ì´ê¸¸ ìˆ˜ ìˆëŠ” ì‚¬ëŒë“¤
+    // Mother¿Í ½Î¿ö¼­ ÀÌ±æ ¼ö ÀÖ´Â »ç¶÷µé
     if (idxMother != -1) {
         int motherIdx = idxMother;
         int found = 0;
@@ -222,18 +204,18 @@ skipBattle:
         }
 
         if (found)
-            fprintf(fp2, " ìŠ¹!\n");
+            fprintf(fp2, " ½Â!\n");
         else
-            fprintf(fp2, "%s ìŠ¹!\n", stu[motherIdx].name);
+            fprintf(fp2, "%s ½Â!\n", stu[motherIdx].name);
     }
 
-    // 9ë²ˆì§¸ 10ë²ˆì§¸ 11ë²ˆì§¸ ì´ë¦„ ì—°ì† ì¶œë ¥í–‡ìŒ
+    // 9¹øÂ°,10¹øÂ°,11¹øÂ° ÀÌ¸§ ¿¬¼Ó Ãâ·Â
     if (count >= 11)
         fprintf(fp2, "%s%s%s\n", stu[8].name, stu[9].name, stu[10].name);
     else
-        fprintf(fp2, "ë°ì´í„°ê°€ ë¶€ì¡±í•©ë‹ˆë‹¤.\n");
+        fprintf(fp2, "µ¥ÀÌÅÍ°¡ ºÎÁ·ÇÕ´Ï´Ù.\n");
 
-    //  í‰ê·  atk, def ê³„ì‚°
+    //  Æò±Õ atk, def °è»ê
     int total_atk = 0, total_def = 0;
     for (int i = 0; i < count; i++) {
         total_atk += stu[i].atk;
@@ -242,25 +224,13 @@ skipBattle:
     int avg_atk = total_atk / count;
     int avg_def = total_def / count;
 
+    fprintf(fp2, "Average atk: %d\n", avg_atk);
+    fprintf(fp2, "Average def: %d\n", avg_def);
 
-
-    // íŒŒì¼ì— ê²°ê³¼ë¥¼ ì €ì¥í•˜ê¸° CSVì—ì„œ 9ë²ˆì§¸,10ë²ˆì§¸, 11ë²ˆì§¸ ì‚¬ëŒì˜ ì´ë¦„ì„ ì—°ì†í•´ì„œ ì“°ì‹œì˜¤
-
-
-
-
-    //fprintf(out, "ê°€ì¥ ê³µê²©ë ¥ì´ ë†’ì€ ì‚¬ëŒ: %s (ATK=%d)\n", stu[max_idx].name, stu[max_idx].atk);
-   // fprintf(out, "3ë²ˆì§¸: %s HP=%d\n", stu[i3].name, stu[i3].hp);
-   // fprintf(fp2, "Average atk: %d\n", avg_atk);
-   // fprintf(fp2, "Average def: %d\n", avg_def);
-
-    // ë§ˆì§€ë§‰ ì¤„
-
-
-    fprintf(fp2, "êµìˆ˜ë‹˜ ì‹œí—˜ë¬¸ì œ ë„ˆë¬´ ì‰½ìŠµë‹ˆë‹¤. ë‹´ì£¼ì— ë” ì–´ë µê²Œ ë‚´ì£¼ì„¸ìš”\n");
+    // ¸¶Áö¸· ÁÙ
+    fprintf(fp2, "±³¼ö´Ô ½ÃÇè¹®Á¦ ³Ê¹« ½±½À´Ï´Ù. ´ãÁÖ¿¡ ´õ ¾î·Æ°Ô ³»ÁÖ¼¼¿ä\n");
 
     fclose(fp2);
-
-    printf("Test.txt íŒŒì¼ ìƒì„± ì™„ë£Œ!\n");
+    printf("Test.txt ÆÄÀÏ »ı¼º ¿Ï·á!\n");
     return 0;
 }

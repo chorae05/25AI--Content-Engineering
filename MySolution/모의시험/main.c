@@ -55,7 +55,7 @@ int main(void) {
 
         count++;
     }
-
+    
     fclose(file);
 
     int fightmax = 0;

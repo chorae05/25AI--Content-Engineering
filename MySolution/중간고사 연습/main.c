@@ -33,14 +33,13 @@ int main(void) // 프로그램이 시작되는 부분
     scanf_s("%s", user_name, (rsize_t)sizeof(user_name)); // 이름을 입력받아요.
 
     // 🟢 학생 정보를 저장한 파일(students.csv)을 엽니다.
-    FILE* fp = NULL; // 파일을 가리킬 변수 (파일 포인터)
-    fopen_s(&fp, "students.csv", "r"); // 읽기 모드("r")로 파일 열기
-
-    // 만약 파일이 열리지 않으면 (파일이 없거나 경로가 틀렸을 때)
-    if (!fp) {
-        printf("students.csv 파일을 열 수 없습니다.\n");
-        return 1; // 프로그램을 종료합니다.
+    FILE* fp = NULL;
+    errno_t err = fopen_s(&fp, "students.csv", "r");
+    if (err != 0 || fp == NULL) {
+        printf("students.csv 파일을 열 수 없습니다!\n");
+        return -1;
     }
+
 
     // 🟢 파일에서 한 줄씩 읽어서 학생 정보를 저장합니다.
     while (fgets(line, sizeof(line), fp) && count < 10) {
@@ -78,11 +77,11 @@ int main(void) // 프로그램이 시작되는 부분
         if (stu[i].atk > stu[max_idx].atk) // 더 높은 공격력을 가진 학생이 있으면
             max_idx = i; // 그 학생의 번호(i)를 저장
 
-    // 🟢 싸움할 두 사람 정하기
+    // 싸움할 두 사람 정하기
     // 예: 3번째(index=3) vs 8번째(index=8)
     int i3 = 3, i8 = 8;
 
-    // 🥊 싸움 계산하기
+    // 싸움 계산하기
     // 상대의 공격력에서 내 방어력을 뺀 값이 실제로 입히는 데미지
     int damage3 = stu[i8].atk - stu[i3].def; // 8번째가 3번째에게 주는 데미지
     int damage8 = stu[i3].atk - stu[i8].def; // 3번째가 8번째에게 주는 데미지
@@ -94,7 +93,7 @@ int main(void) // 프로그램이 시작되는 부분
     int hp8 = stu[i8].hp - damage8;
 
     if (damage3 == 0 && damage8 == 0)
-        strcpy_s(winner, sizeof(winner), "무승부");
+        strcpy_s(winner, sizeof(winner), "무승부");    //winner에 안전하게 복사를 넣기 위해  strcpy_s를 사용함
     else if (hp3 == hp8)
         strcpy_s(winner, sizeof(winner), "무승부");
     else if (hp3 > hp8)

@@ -11,8 +11,6 @@ typedef struct {
     char winner[250];
 } Student;
 
-// 싸움에서 이긴 사람의 이름을 저장
-#define MAX 100
 
 int main(void) {
     Student s[10];
@@ -29,13 +27,11 @@ int main(void) {
     scanf_s("%s", name, (rsize_t)sizeof(name));
 
     FILE* file = NULL;
-    fopen_s(&file, "students.csv", "r");
-
-    if (!file) {
+    errno_t err = fopen_s(&file, "students.csv", "r");
+    if (err != 0 || file == NULL) {
         printf("파일을 열 수 없습니다!\n");
         return -1;
     }
-
 
     // 한 줄씩 읽기
     while (fgets(line, sizeof(line), file) && count < 10) {

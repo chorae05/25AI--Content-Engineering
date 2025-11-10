@@ -25,14 +25,16 @@ void resetTextColor() {
 
 int main() {
     char line[256];  // 파일에서 한 줄씩 읽을 공간
-    int count = 0;
+    int count = 0;  //사용자가 입력한 선수 수를 세는 변수  파일에 쓰기 전 단계
+    int loadcount = 0;      //파일에서 읽은 선수 수를 세는 변수   파일을 읽은 후 단계
+
     Player player[MAX];
 
   
 
-    setTextColor(32);
+    //setTextColor(32);
     printf("몇 명의 선수를 입력받을까요? :");
-    setTextColor(0);
+    //setTextColor(0);
     scanf_s("%d", &count);
     
 
@@ -63,7 +65,7 @@ int main() {
         printf("파일을 열 수 없습니다!\n");
         return -1;
     }
-
+    //파일 or csv에 내가 입력한 것들이 작성되는 작업
     fprintf(file, "이름,나이,등번호,타율\n");
 
     for (int i = 0; i < count; i++)
@@ -76,6 +78,7 @@ int main() {
     }
 
     fclose(file);
+
     printf("\n 파일 저장 완료! (%s)\n", "players_lg.csv");
     printf("%d 명의 정보를 CSV에 저장했습니다. -> %s\n", count, "players_lg.csv");
     printf("엔터를 누르면 csv를 다시 읽어옵니다.\n");
@@ -90,10 +93,12 @@ int main() {
         return 1; // 프로그램을 종료합니다.
     }
 
-    int loadcount = 0;
-    fgets(line, sizeof(line), fp);
+    //작성된 글이 나눠지는 과정
+    //int loadcount = 0;      //파일에서 읽은 선수 수를 세는 변수   파일을 읽은 후 단계
+    fgets(line, sizeof(line), fp);//윗줄은 고정
 
     while (fgets(line, sizeof(line), fp)) {
+        if (strstr(line, "가장 평균") != NULL) break; // 이 문장 만나면 종료
 
         char* t, * n;
 
@@ -114,7 +119,7 @@ int main() {
         player[loadcount].tiyou = atof(t);
 
         loadcount++;
-
+    }
         fclose(fp);
 
         printf("csv에서 %d명 로드됨 -> 표로 출력합니다.\n", loadcount);
@@ -132,5 +137,5 @@ int main() {
 
         return 0;
 
-    }
+    
 }
